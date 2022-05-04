@@ -1,23 +1,33 @@
 package jm.task.core.jdbc;
 
+import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.Util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class Main {
+    static final Connection CONNECT = Util.connectionDB();
+
     public static void main(String[] args) throws SQLException {
-        Connection connect = Util.connectionDB();
-        Statement statement = connect.createStatement();
-        String sql = "select id, name from denik_db.my_table";
-        ResultSet resultSet = statement.executeQuery(sql);
-        while (resultSet.next()) {
-            int id = resultSet.getInt(1);
-            String name = resultSet.getString(2);
-            System.out.println(id + " " + name);
-        }
-        // реализуйте алгоритм здесь
+        UserServiceImpl userService = new UserServiceImpl(CONNECT);
+
+        userService.createUsersTable();
+        userService.saveUser("Александр", "Александрович", (byte)25);
+        userService.saveUser("Иван", "Иванович", (byte)15);
+        userService.saveUser("Борис", "Борисович", (byte)35);
+        userService.saveUser("Саша", "Сашович", (byte)14);
+
+        System.out.println("\n");
+
+        List<User> users = userService.getAllUsers();
+        CONNECT.close();
+        users.forEach(System.out::println);
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
     }
 }

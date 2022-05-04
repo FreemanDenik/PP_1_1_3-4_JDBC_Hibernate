@@ -37,7 +37,9 @@ public class UserServiceTest {
     @Test
     public void saveUserSimple(){
         try {
+            userService.createUsersTable();
             userService.saveUser(testName, testLastName, testAge);
+            userService.cleanUsersTable();
         }catch (Exception e) {
             Assert.fail("Во время тестирования сохранения пользователя произошло исключение\n" + e);
         }

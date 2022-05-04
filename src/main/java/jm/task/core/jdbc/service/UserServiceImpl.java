@@ -4,15 +4,19 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+
 public class UserServiceImpl implements UserService {
-    Connection connection;
-    public UserServiceImpl(){
+    private Connection connection;
+    public UserServiceImpl() {
         this.connection = Util.connectionDB();
     }
+
     public UserServiceImpl(Connection connection) {
         this.connection = connection;
     }
+
     public void createUsersTable() throws SQLException {
         Statement statement = connection.createStatement();
         String sql = """
@@ -41,17 +45,33 @@ public class UserServiceImpl implements UserService {
         prepared.setString(2, lastName);
         prepared.setByte(3, age);
         prepared.execute();
+        System.out.printf("User с именем – %s добавлен в базу данных\n", name);
     }
 
-    public void removeUserById(long id) {
-
+    public void removeUserById(long id) throws SQLException {
+        String sql = "DELETE FROM Users WHERE id = ?";
+        PreparedStatement prepared = connection.prepareStatement(sql);
+        prepared.setLong(1, id);
+        prepared.execute();
     }
 
-    public List<User> getAllUsers() {
-        return null;
+    public List<User> getAllUsers() throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = "SELECT name, lastName, age FROM Users";
+        ResultSet result = statement.executeQuery(sql);
+        List<User> users = new ArrayList<>();
+        while (result.next()) {
+            String name = result.getString(1);
+            String lastName = result.getString(2);
+            byte age = result.getByte(3);
+            users.add(new User(name, lastName, age));
+        }
+        return users;
     }
 
-    public void cleanUsersTable() {
-
+    public void cleanUsersTable() throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = "TRUNCATE TABLE Users";
+        statement.execute(sql);
     }
 }

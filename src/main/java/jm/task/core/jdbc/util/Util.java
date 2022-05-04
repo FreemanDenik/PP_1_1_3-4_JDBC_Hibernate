@@ -17,7 +17,7 @@ public class Util {
         try {
             connection = DriverManager.getConnection(connectionURL, userName, password);
             System.out.println("Get: " + connection);
-            System.out.println("Done");
+            System.out.println("Done\n");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
