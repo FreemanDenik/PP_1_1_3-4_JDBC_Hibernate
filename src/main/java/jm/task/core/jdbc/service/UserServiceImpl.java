@@ -3,8 +3,9 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 import java.sql.*;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, Consumer<User> {
 
     private UserDaoJDBCImpl context;
     public UserServiceImpl() {
@@ -35,4 +36,13 @@ public class UserServiceImpl implements UserService {
         context.cleanUsersTable();
     }
 
+    @Override
+    public void accept(User user) {
+        try {
+            context.saveUser(user.getName(), user.getLastName(), user.getAge());
+            System.out.printf("User с именем – %s добавлен в базу данных\n", user.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

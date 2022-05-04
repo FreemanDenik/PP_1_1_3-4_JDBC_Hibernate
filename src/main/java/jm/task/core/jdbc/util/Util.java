@@ -12,9 +12,9 @@ public class Util {
 
     public static Connection connectionDB() {
         String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
-        System.out.println("Get connection...");
         Connection connection = null;
         try {
+            System.out.println("Get connection...");
             connection = DriverManager.getConnection(connectionURL, userName, password);
             System.out.println("Get: " + connection);
             System.out.println("Done\n");

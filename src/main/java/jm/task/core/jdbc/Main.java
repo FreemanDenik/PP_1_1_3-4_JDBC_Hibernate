@@ -2,29 +2,27 @@ package jm.task.core.jdbc;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserServiceImpl;
-import jm.task.core.jdbc.util.Util;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
         UserServiceImpl userService = new UserServiceImpl();
-
+        List<User> users = Arrays.asList(
+                new User("Александр", "Александрович", (byte) 25),
+                new User("Иван", "Иванович", (byte) 15),
+                new User("Борис", "Борисович", (byte) 35),
+                new User("Саша", "Сашович", (byte) 14)
+        );
         userService.createUsersTable();
-        userService.saveUser("Александр", "Александрович", (byte)25);
-        userService.saveUser("Иван", "Иванович", (byte)15);
-        userService.saveUser("Борис", "Борисович", (byte)35);
-        userService.saveUser("Саша", "Сашович", (byte)14);
+        users.forEach(userService);
 
         System.out.println("\n");
 
-        List<User> users = userService.getAllUsers();
-        users.forEach(System.out::println);
+        userService.getAllUsers().forEach(System.out::println);
         userService.cleanUsersTable();
         userService.dropUsersTable();
     }
