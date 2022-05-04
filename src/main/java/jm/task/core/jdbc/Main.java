@@ -8,13 +8,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    static final Connection CONNECT = Util.connectionDB();
-
     public static void main(String[] args) throws SQLException {
-        UserServiceImpl userService = new UserServiceImpl(CONNECT);
+        UserServiceImpl userService = new UserServiceImpl();
 
         userService.createUsersTable();
         userService.saveUser("Александр", "Александрович", (byte)25);
@@ -28,6 +27,5 @@ public class Main {
         users.forEach(System.out::println);
         userService.cleanUsersTable();
         userService.dropUsersTable();
-        CONNECT.close();
     }
 }
