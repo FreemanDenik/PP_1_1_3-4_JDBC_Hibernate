@@ -33,18 +33,7 @@ public class UserServiceTest {
             Assert.fail("При тестировании создания таблицы пользователей произошло исключение\n" + e.getMessage());
         }
     }
-    /**/
-    @Test
-    public void saveUserSimple(){
-        try {
-            userService.createUsersTable();
-            userService.saveUser(testName, testLastName, testAge);
-            userService.cleanUsersTable();
-        }catch (Exception e) {
-            Assert.fail("Во время тестирования сохранения пользователя произошло исключение\n" + e);
-        }
-    }
-    /**/
+
     @Test
     public void saveUser() {
         try {

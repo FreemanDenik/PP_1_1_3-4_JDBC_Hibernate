@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService, Consumer<User> {
     public void accept(User user) {
         try {
             context.saveUser(user.getName(), user.getLastName(), user.getAge());
-            System.out.printf("User с именем – %s добавлен в базу данных\n", user.getName());
+            System.out.printf("User с именем – \"%s\" добавлен в базу данных\n", user.getName());
         } catch (SQLException e) {
             e.printStackTrace();
         }
