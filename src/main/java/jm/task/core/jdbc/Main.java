@@ -25,9 +25,9 @@ public class Main {
         System.out.println("\n");
 
         List<User> users = userService.getAllUsers();
-        CONNECT.close();
         users.forEach(System.out::println);
         userService.cleanUsersTable();
         userService.dropUsersTable();
+        CONNECT.close();
     }
 }
