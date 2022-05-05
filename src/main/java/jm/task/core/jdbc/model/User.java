@@ -1,5 +1,7 @@
 package jm.task.core.jdbc.model;
 
+import net.bytebuddy.asm.Advice;
+
 import javax.persistence.*;
 
 @Entity

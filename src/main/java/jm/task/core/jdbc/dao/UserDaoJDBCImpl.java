@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    private final Connection connection = Util.connectionDB();
+    private final Connection connection;
 
     public UserDaoJDBCImpl() {
-
+        connection = Util.connectionDB();
     }
 
     public void createUsersTable() throws SQLException {
@@ -40,6 +40,8 @@ public class UserDaoJDBCImpl implements UserDao {
         prepared.setString(2, lastName);
         prepared.setByte(3, age);
         prepared.execute();
+
+        System.out.printf("User с именем – \"%s\" добавлен в базу данных\n", name);
     }
 
     public void removeUserById(long id) throws SQLException {

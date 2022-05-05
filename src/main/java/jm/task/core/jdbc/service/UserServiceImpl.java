@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class UserServiceImpl implements UserService, Consumer<User> {
+public class UserServiceImpl implements UserService{
 
     private UserDaoJDBCImpl context;
     public UserServiceImpl() {
@@ -36,13 +36,4 @@ public class UserServiceImpl implements UserService, Consumer<User> {
         context.cleanUsersTable();
     }
 
-    @Override
-    public void accept(User user) {
-        try {
-            context.saveUser(user.getName(), user.getLastName(), user.getAge());
-            System.out.printf("User с именем – \"%s\" добавлен в базу данных\n", user.getName());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
