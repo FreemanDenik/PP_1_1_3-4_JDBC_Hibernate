@@ -1,4 +1,6 @@
 package jm.task.core.jdbc.service;
+import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 import java.sql.*;
@@ -7,9 +9,9 @@ import java.util.function.Consumer;
 
 public class UserServiceImpl implements UserService{
 
-    private UserDaoJDBCImpl context;
+    private UserDao context;
     public UserServiceImpl() {
-        context = new UserDaoJDBCImpl();
+        context = new UserDaoHibernateImpl(); //UserDaoJDBCImpl();
     }
 
     public void createUsersTable() throws SQLException {
